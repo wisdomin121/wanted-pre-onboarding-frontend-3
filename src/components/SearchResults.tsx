@@ -1,4 +1,4 @@
-import { OuterStyled } from './SearchResult.styled'
+import { OuterStyled } from './SearchResults.styled'
 
 function SearchResults() {
   return <OuterStyled></OuterStyled>

@@ -1,2 +1,2 @@
 export { default as Input } from './Input'
-export { default as SearchResults } from './SearchResult'
+export { default as SearchResults } from './SearchResults'
