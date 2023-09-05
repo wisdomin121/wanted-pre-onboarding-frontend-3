@@ -1,6 +1,6 @@
 import { styled } from 'styled-components'
 
-export const OuterWrapper = styled.div<{ isFocus: boolean }>`
+export const OuterStyled = styled.div<{ isFocus: boolean }>`
   overflow: hidden;
   display: flex;
   align-items: center;

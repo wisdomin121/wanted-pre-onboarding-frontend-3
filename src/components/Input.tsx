@@ -1,22 +1,16 @@
-import { useState } from 'react'
-
 import { ReactComponent as Magnifying } from 'assets/Magnifying.svg'
 
-import { IconButtonStyled, InputStyled, OuterWrapper } from './Input.styled'
+import { IconButtonStyled, InputStyled, OuterStyled } from './Input.styled'
 
-function Input() {
-  const [isFocus, setIsFocus] = useState<boolean>(false)
+interface InputProps {
+  isFocus: boolean
+  handleFocus: () => void
+  handleBlur: () => void
+}
 
-  const handleFocus = () => {
-    setIsFocus(true)
-  }
-
-  const handleBlur = () => {
-    setIsFocus(false)
-  }
-
+function Input({ isFocus, handleFocus, handleBlur }: InputProps) {
   return (
-    <OuterWrapper isFocus={isFocus}>
+    <OuterStyled isFocus={isFocus}>
       <InputStyled
         placeholder={isFocus ? '' : '🔍︎ 질환명을 입력해 주세요'}
         onBlur={handleBlur}
@@ -25,7 +19,7 @@ function Input() {
       <IconButtonStyled>
         <Magnifying fill="white" />
       </IconButtonStyled>
-    </OuterWrapper>
+    </OuterStyled>
   )
 }
 

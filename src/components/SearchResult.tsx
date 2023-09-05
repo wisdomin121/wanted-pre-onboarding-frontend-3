@@ -1,5 +1,7 @@
-function SearchResult() {
-  return <></>
+import { OuterStyled } from './SearchResult.styled'
+
+function SearchResults() {
+  return <OuterStyled></OuterStyled>
 }
 
-export default SearchResult
+export default SearchResults
