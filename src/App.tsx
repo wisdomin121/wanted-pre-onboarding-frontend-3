@@ -1,10 +1,14 @@
+import { ThemeProvider } from 'styled-components'
+
 import { MainPage } from 'pages'
+import { GlobalStyles, Theme } from 'styles'
 
 function App() {
   return (
-    <div>
+    <ThemeProvider theme={Theme}>
+      <GlobalStyles />
       <MainPage />
-    </div>
+    </ThemeProvider>
   )
 }
 
