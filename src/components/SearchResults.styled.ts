@@ -1,11 +1,11 @@
 import { styled } from 'styled-components'
 
 export const OuterStyled = styled.div`
+  overflow: hidden;
   position: absolute;
   top: calc(50% + 40px);
   width: 100%;
   max-width: 425px;
-  padding: 20px;
   border-radius: 20px;
   background-color: white;
 
@@ -16,4 +16,9 @@ export const OuterStyled = styled.div`
   @media screen and (max-width: 425px) {
     max-width: calc(100% - 50px);
   }
+`
+
+export const TextStyled = styled.p`
+  margin: 30px 30px 10px;
+  font-size: 14px;
 `
