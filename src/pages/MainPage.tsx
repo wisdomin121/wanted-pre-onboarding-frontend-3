@@ -29,7 +29,7 @@ function MainPage() {
   return (
     <MainStyled ref={mainRef}>
       <SearchInput isFocus={isFocus} setIsFocus={setIsFocus} setValue={setValue} value={value} />
-      {isFocus && <SearchResults value={value} />}
+      {isFocus && <SearchResults setValue={setValue} value={value} />}
     </MainStyled>
   )
 }

@@ -4,11 +4,12 @@ import { OuterStyled } from './SearchResult.styled'
 
 interface SearchResultProps {
   text: string
+  _onClick: () => void
 }
 
-function SearchResult({ text }: SearchResultProps) {
+function SearchResult({ text, _onClick }: SearchResultProps) {
   return (
-    <OuterStyled>
+    <OuterStyled onClick={_onClick}>
       <Magnifying fill="gray" />
       {text}
     </OuterStyled>

@@ -5,12 +5,17 @@ import { InnerStyled, NoResultsTextStyled, OuterStyled, TextStyled } from './Sea
 
 interface SearchResultsProps {
   value: string
+  setValue: React.Dispatch<React.SetStateAction<string>>
 }
 
-function SearchResults({ value }: SearchResultsProps) {
+function SearchResults({ value, setValue }: SearchResultsProps) {
   const { results } = useResultsStore()
 
   const recentlyKeywords = sessionStorage.getItem('recentlyKeywords')
+
+  const chooseKeyword = (keyword: string) => {
+    setValue(keyword)
+  }
 
   return (
     <OuterStyled>
@@ -24,7 +29,15 @@ function SearchResults({ value }: SearchResultsProps) {
         {value !== '' ? (
           results.length !== 0 ? (
             results.map((result, idx) => {
-              return <SearchResult key={idx} text={result.sickNm} />
+              return (
+                <SearchResult
+                  key={idx}
+                  _onClick={() => {
+                    chooseKeyword(result.sickNm)
+                  }}
+                  text={result.sickNm}
+                />
+              )
             })
           ) : (
             <NoResultsTextStyled>추천 검색어 없음</NoResultsTextStyled>
@@ -33,7 +46,15 @@ function SearchResults({ value }: SearchResultsProps) {
           JSON.parse(recentlyKeywords)
             .reverse()
             .map((keyword: string, idx: number) => {
-              return <SearchResult key={idx} text={keyword} />
+              return (
+                <SearchResult
+                  key={idx}
+                  _onClick={() => {
+                    chooseKeyword(keyword)
+                  }}
+                  text={keyword}
+                />
+              )
             })
         ) : (
           <NoResultsTextStyled>최근 검색어 없음</NoResultsTextStyled>
