@@ -6,3 +6,9 @@ export const API = axios.create({
   baseURL: API_URL,
   headers: { 'Content-Type': 'application/json' },
 })
+
+API.interceptors.request.use((config) => {
+  console.info('calling api')
+
+  return config
+})
