@@ -3,21 +3,29 @@ import { useEffect, useState } from 'react'
 import { getSicks } from 'apis/sickApi'
 import { ReactComponent as Magnifying } from 'assets/Magnifying.svg'
 import { useDebounce, useStorage } from 'hooks'
-import { useResultsStore, useValueStore } from 'stores'
+import { useResultsStore } from 'stores'
 
 import { IconButtonStyled, InputStyled, OuterStyled } from './SearchInput.styled'
 
 interface InputProps {
   isFocus: boolean
-  handleFocus: () => void
-  handleBlur: () => void
+  setIsFocus: React.Dispatch<React.SetStateAction<boolean>>
+  value: string
+  setValue: React.Dispatch<React.SetStateAction<string>>
 }
 
-function SearchInput({ isFocus, handleFocus, handleBlur }: InputProps) {
+function SearchInput({ isFocus, setIsFocus, value, setValue }: InputProps) {
   const [isClicked, setIsClicked] = useState<boolean>(false)
 
-  const { value, setValue } = useValueStore()
   const { setResults } = useResultsStore()
+
+  const handleFocus = () => {
+    setIsFocus(true)
+  }
+
+  const handleBlur = () => {
+    setIsFocus(false)
+  }
 
   const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value)

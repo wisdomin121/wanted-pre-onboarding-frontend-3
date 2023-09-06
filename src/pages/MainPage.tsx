@@ -5,20 +5,13 @@ import { SearchInput, SearchResults } from 'components'
 import { MainStyled } from './MainPage.styled'
 
 function MainPage() {
+  const [value, setValue] = useState<string>('')
   const [isFocus, setIsFocus] = useState<boolean>(false)
-
-  const handleFocus = () => {
-    setIsFocus(true)
-  }
-
-  const handleBlur = () => {
-    setIsFocus(false)
-  }
 
   return (
     <MainStyled>
-      <SearchInput handleBlur={handleBlur} handleFocus={handleFocus} isFocus={isFocus} />
-      {isFocus && <SearchResults />}
+      <SearchInput isFocus={isFocus} setIsFocus={setIsFocus} setValue={setValue} value={value} />
+      {isFocus && <SearchResults value={value} />}
     </MainStyled>
   )
 }

@@ -1,10 +1,13 @@
 import { SearchResult } from 'components'
-import { useResultsStore, useValueStore } from 'stores'
+import { useResultsStore } from 'stores'
 
 import { InnerStyled, NoResultsTextStyled, OuterStyled, TextStyled } from './SearchResults.styled'
 
-function SearchResults() {
-  const { value } = useValueStore()
+interface SearchResultsProps {
+  value: string
+}
+
+function SearchResults({ value }: SearchResultsProps) {
   const { results } = useResultsStore()
 
   const recentlyKeywords = sessionStorage.getItem('recentlyKeywords')
