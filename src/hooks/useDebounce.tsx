@@ -14,6 +14,7 @@ const useDebounce = (callback: () => void) => {
 
     timer.current = newTimer
   }
+
   return dispatchDebounce
 }
 

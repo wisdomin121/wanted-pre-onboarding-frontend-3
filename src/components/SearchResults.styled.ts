@@ -29,3 +29,11 @@ export const TextStyled = styled.p`
   margin: 0 30px 10px;
   font-size: 14px;
 `
+
+export const NoResultsTextStyled = styled.p`
+  width: fit-content;
+  margin: 0 30px;
+  padding: 4px 8px;
+  border-radius: 10px;
+  background-color: lightgray;
+`

@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { getSicks } from 'apis/sickApi'
 import { ReactComponent as Magnifying } from 'assets/Magnifying.svg'
-import useDebounce from 'hooks/useDebounce'
+import { useDebounce, useStorage } from 'hooks'
 import useResultsStore from 'stores/useResultsStore'
 import useValueStore from 'stores/useValueStore'
 
@@ -16,6 +16,8 @@ interface InputProps {
 }
 
 function Input({ isFocus, handleFocus, handleBlur }: InputProps) {
+  const [isClicked, setIsClicked] = useState<boolean>(false)
+
   const { value, setValue } = useValueStore()
   const { setResults } = useResultsStore()
 
@@ -28,6 +30,7 @@ function Input({ isFocus, handleFocus, handleBlur }: InputProps) {
   }
 
   const debounceSickApiFunc = useDebounce(sickApiFunc)
+  const saveResult = useStorage('recentlyKeywords', value)
 
   useEffect(() => {
     if (value.length !== 0) {
@@ -37,6 +40,14 @@ function Input({ isFocus, handleFocus, handleBlur }: InputProps) {
     }
   }, [value])
 
+  useEffect(() => {
+    if (isClicked) {
+      saveResult()
+      setIsClicked(false)
+      setValue('')
+    }
+  }, [isClicked])
+
   return (
     <OuterStyled isFocus={isFocus}>
       <InputStyled
@@ -45,8 +56,15 @@ function Input({ isFocus, handleFocus, handleBlur }: InputProps) {
         onBlur={handleBlur}
         onChange={changeValue}
         onFocus={handleFocus}
+        onKeyDown={(e: React.KeyboardEvent) => {
+          if (e.key === 'Enter') setIsClicked(true)
+        }}
       />
-      <IconButtonStyled>
+      <IconButtonStyled
+        onClick={() => {
+          setIsClicked(true)
+        }}
+      >
         <Magnifying fill="white" />
       </IconButtonStyled>
     </OuterStyled>
