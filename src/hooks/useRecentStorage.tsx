@@ -1,5 +1,5 @@
 const useRecentStorage = (key: string, value: string) => {
-  const saveResults = () => {
+  const saveRecentResults = () => {
     const recentlyKeywords = sessionStorage.getItem(key)
 
     if (recentlyKeywords) {
@@ -21,7 +21,7 @@ const useRecentStorage = (key: string, value: string) => {
     }
   }
 
-  return saveResults
+  return saveRecentResults
 }
 
 export default useRecentStorage
