@@ -1,10 +1,12 @@
 import { SearchResult } from 'components'
+import useResultsStore from 'stores/useResultsStore'
 import useValueStore from 'stores/useValueStore'
 
-import { OuterStyled, TextStyled } from './SearchResults.styled'
+import { InnerStyled, OuterStyled, TextStyled } from './SearchResults.styled'
 
 function SearchResults() {
   const { value } = useValueStore()
+  const { results } = useResultsStore()
 
   return (
     <OuterStyled>
@@ -13,8 +15,12 @@ function SearchResults() {
       ) : (
         <TextStyled>추천 검색어</TextStyled>
       )}
-      <SearchResult text="코로나" />
-      <SearchResult text="코로나" />
+
+      <InnerStyled>
+        {results.map((result, idx) => {
+          return <SearchResult key={idx} text={result.sickNm} />
+        })}
+      </InnerStyled>
     </OuterStyled>
   )
 }

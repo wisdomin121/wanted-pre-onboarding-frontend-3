@@ -5,6 +5,8 @@ export const OuterStyled = styled.div`
   position: absolute;
   top: calc(50% + 40px);
   width: 100%;
+  height: 40%;
+  padding: 30px 0;
   max-width: 425px;
   border-radius: 20px;
   background-color: white;
@@ -18,7 +20,12 @@ export const OuterStyled = styled.div`
   }
 `
 
+export const InnerStyled = styled.div`
+  overflow: auto;
+  height: 100%;
+`
+
 export const TextStyled = styled.p`
-  margin: 30px 30px 10px;
+  margin: 0 30px 10px;
   font-size: 14px;
 `
