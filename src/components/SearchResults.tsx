@@ -1,6 +1,5 @@
 import { SearchResult } from 'components'
-import useResultsStore from 'stores/useResultsStore'
-import useValueStore from 'stores/useValueStore'
+import { useResultsStore, useValueStore } from 'stores'
 
 import { InnerStyled, NoResultsTextStyled, OuterStyled, TextStyled } from './SearchResults.styled'
 

@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { styled } from 'styled-components'
 
-import { Input, SearchResults } from 'components'
+import { SearchInput, SearchResults } from 'components'
+
+import { MainStyled } from './MainPage.styled'
 
 function MainPage() {
   const [isFocus, setIsFocus] = useState<boolean>(false)
@@ -16,21 +17,10 @@ function MainPage() {
 
   return (
     <MainStyled>
-      <Input handleBlur={handleBlur} handleFocus={handleFocus} isFocus={isFocus} />
+      <SearchInput handleBlur={handleBlur} handleFocus={handleFocus} isFocus={isFocus} />
       {isFocus && <SearchResults />}
     </MainStyled>
   )
 }
-
-const MainStyled = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-
-  @media screen and (max-width: 425px) {
-    padding: 0 25px;
-  }
-`
 
 export default MainPage

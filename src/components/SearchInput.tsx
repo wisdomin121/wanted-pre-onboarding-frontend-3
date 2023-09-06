@@ -1,11 +1,9 @@
-/* eslint-disable no-console */
 import { useEffect, useState } from 'react'
 
 import { getSicks } from 'apis/sickApi'
 import { ReactComponent as Magnifying } from 'assets/Magnifying.svg'
 import { useDebounce, useStorage } from 'hooks'
-import useResultsStore from 'stores/useResultsStore'
-import useValueStore from 'stores/useValueStore'
+import { useResultsStore, useValueStore } from 'stores'
 
 import { IconButtonStyled, InputStyled, OuterStyled } from './SearchInput.styled'
 
@@ -15,7 +13,7 @@ interface InputProps {
   handleBlur: () => void
 }
 
-function Input({ isFocus, handleFocus, handleBlur }: InputProps) {
+function SearchInput({ isFocus, handleFocus, handleBlur }: InputProps) {
   const [isClicked, setIsClicked] = useState<boolean>(false)
 
   const { value, setValue } = useValueStore()
@@ -25,16 +23,18 @@ function Input({ isFocus, handleFocus, handleBlur }: InputProps) {
     setValue(e.target.value)
   }
 
-  const sickApiFunc = () => {
-    getSicks(value).then((res) => setResults(res.data))
+  const loadSicksFunc = () => {
+    getSicks(value)
+      .then((res) => setResults(res.data))
+      .catch((err) => console.error(err))
   }
 
-  const debounceSickApiFunc = useDebounce(sickApiFunc)
-  const saveResult = useStorage('recentlyKeywords', value)
+  const getResultsWithDebounce = useDebounce(loadSicksFunc)
+  const saveRecommandResult = useStorage('recentlyKeywords', value)
 
   useEffect(() => {
     if (value.length !== 0) {
-      debounceSickApiFunc()
+      getResultsWithDebounce()
     } else {
       setResults([])
     }
@@ -42,7 +42,7 @@ function Input({ isFocus, handleFocus, handleBlur }: InputProps) {
 
   useEffect(() => {
     if (isClicked) {
-      saveResult()
+      saveRecommandResult()
       setIsClicked(false)
       setValue('')
     }
@@ -71,4 +71,4 @@ function Input({ isFocus, handleFocus, handleBlur }: InputProps) {
   )
 }
 
-export default Input
+export default SearchInput
