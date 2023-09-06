@@ -7,7 +7,7 @@ import { useDebounce, useStorage } from 'hooks'
 import useResultsStore from 'stores/useResultsStore'
 import useValueStore from 'stores/useValueStore'
 
-import { IconButtonStyled, InputStyled, OuterStyled } from './Input.styled'
+import { IconButtonStyled, InputStyled, OuterStyled } from './SearchInput.styled'
 
 interface InputProps {
   isFocus: boolean
