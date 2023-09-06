@@ -1,4 +1,4 @@
-const useStorage = (key: string, value: string) => {
+const useRecentStorage = (key: string, value: string) => {
   const saveResults = () => {
     const recentlyKeywords = sessionStorage.getItem(key)
 
@@ -24,4 +24,4 @@ const useStorage = (key: string, value: string) => {
   return saveResults
 }
 
-export default useStorage
+export default useRecentStorage
