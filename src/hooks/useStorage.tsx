@@ -3,15 +3,21 @@ const useStorage = (key: string, value: string) => {
     const recentlyKeywords = sessionStorage.getItem(key)
 
     if (recentlyKeywords) {
-      const arr = JSON.parse(recentlyKeywords)
+      const keywordsSet = new Set(JSON.parse(recentlyKeywords))
 
-      if (!arr.includes(value) && value.length !== 0) arr.push(value)
+      if (value.length !== 0) {
+        if (keywordsSet.has(value)) {
+          keywordsSet.delete(value)
+        }
 
-      sessionStorage.setItem(key, JSON.stringify(arr))
+        keywordsSet.add(value)
+      }
+
+      sessionStorage.setItem(key, JSON.stringify(Array.from(keywordsSet)))
     } else {
-      const arr = [value]
+      const keywordsSet = new Set([value])
 
-      sessionStorage.setItem(key, JSON.stringify(arr))
+      sessionStorage.setItem(key, JSON.stringify(Array.from(keywordsSet)))
     }
   }
 

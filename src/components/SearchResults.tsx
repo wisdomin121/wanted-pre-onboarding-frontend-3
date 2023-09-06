@@ -30,9 +30,11 @@ function SearchResults({ value }: SearchResultsProps) {
             <NoResultsTextStyled>추천 검색어 없음</NoResultsTextStyled>
           )
         ) : recentlyKeywords ? (
-          JSON.parse(recentlyKeywords).map((keyword: string, idx: number) => {
-            return <SearchResult key={idx} text={keyword} />
-          })
+          JSON.parse(recentlyKeywords)
+            .reverse()
+            .map((keyword: string, idx: number) => {
+              return <SearchResult key={idx} text={keyword} />
+            })
         ) : (
           <NoResultsTextStyled>최근 검색어 없음</NoResultsTextStyled>
         )}
