@@ -6,13 +6,23 @@ const useRecommendStorage = (keyword: string, setResults: (value: Result[]) => v
     const cache = sessionStorage.getItem(keyword)
 
     if (cache) {
-      setResults(JSON.parse(cache))
+      const parseCache = JSON.parse(cache)
+
+      if (parseCache.expireTime < new Date().getTime()) {
+        sessionStorage.removeItem(keyword)
+      } else {
+        setResults(JSON.parse(cache).data)
+        return
+      }
     }
 
     getSicks(keyword)
       .then((res) => {
         setResults(res.data)
-        sessionStorage.setItem(keyword, JSON.stringify(res.data))
+        sessionStorage.setItem(
+          keyword,
+          JSON.stringify({ data: res.data, expireTime: new Date().getTime() + 1000 * 60 })
+        )
       })
       .catch((err) => console.error(err))
   }
