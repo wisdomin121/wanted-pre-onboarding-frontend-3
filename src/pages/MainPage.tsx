@@ -31,15 +31,20 @@ function MainPage() {
       }
     }
 
-    document.addEventListener('mousedown', closeResults)
+    document.addEventListener('click', closeResults)
 
     return () => {
-      document.removeEventListener('mousedown', closeResults)
+      document.removeEventListener('click', closeResults)
     }
   }, [])
 
   return (
-    <MainStyled ref={mainRef}>
+    <MainStyled
+      ref={mainRef}
+      onClick={(e) => {
+        e.stopPropagation()
+      }}
+    >
       <SearchInput isFocus={isFocus} setIsFocus={setIsFocus} setValue={setValue} value={value} />
 
       {isFocus && <SearchResults setValue={setValue} value={value} />}

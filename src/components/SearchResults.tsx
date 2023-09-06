@@ -13,10 +13,6 @@ function SearchResults({ value, setValue }: SearchResultsProps) {
 
   const recentlyKeywords = sessionStorage.getItem('recentlyKeywords')
 
-  const chooseKeyword = (keyword: string) => {
-    setValue(keyword)
-  }
-
   return (
     <OuterStyled>
       {value.length === 0 ? (
@@ -33,7 +29,7 @@ function SearchResults({ value, setValue }: SearchResultsProps) {
                 <SearchResult
                   key={idx}
                   _onClick={() => {
-                    chooseKeyword(result.sickNm)
+                    setValue(result.sickNm)
                   }}
                   text={result.sickNm}
                 />
@@ -50,7 +46,7 @@ function SearchResults({ value, setValue }: SearchResultsProps) {
                 <SearchResult
                   key={idx}
                   _onClick={() => {
-                    chooseKeyword(keyword)
+                    setValue(keyword)
                   }}
                   text={keyword}
                 />
