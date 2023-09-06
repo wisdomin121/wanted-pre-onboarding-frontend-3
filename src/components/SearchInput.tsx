@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import { getSicks } from 'apis/sickApi'
-import { ReactComponent as Magnifying } from 'assets/Magnifying.svg'
-import { useDebounce, useStorage } from 'hooks'
+import { SearchButton } from 'components'
+import { useDebounce } from 'hooks'
 import { useResultsStore } from 'stores'
 
-import { IconButtonStyled, InputStyled, OuterStyled } from './SearchInput.styled'
+import { InputStyled, OuterStyled } from './SearchInput.styled'
 
 interface InputProps {
   isFocus: boolean
@@ -15,8 +15,6 @@ interface InputProps {
 }
 
 function SearchInput({ isFocus, setIsFocus, value, setValue }: InputProps) {
-  const [isClicked, setIsClicked] = useState<boolean>(false)
-
   const { setResults } = useResultsStore()
 
   const handleFocus = () => {
@@ -38,7 +36,6 @@ function SearchInput({ isFocus, setIsFocus, value, setValue }: InputProps) {
   }
 
   const getResultsWithDebounce = useDebounce(loadSicksFunc)
-  const saveRecommandResult = useStorage('recentlyKeywords', value)
 
   useEffect(() => {
     if (value.length !== 0) {
@@ -48,14 +45,6 @@ function SearchInput({ isFocus, setIsFocus, value, setValue }: InputProps) {
     }
   }, [value])
 
-  useEffect(() => {
-    if (isClicked) {
-      saveRecommandResult()
-      setIsClicked(false)
-      setValue('')
-    }
-  }, [isClicked])
-
   return (
     <OuterStyled isFocus={isFocus}>
       <InputStyled
@@ -64,17 +53,9 @@ function SearchInput({ isFocus, setIsFocus, value, setValue }: InputProps) {
         onBlur={handleBlur}
         onChange={changeValue}
         onFocus={handleFocus}
-        onKeyDown={(e: React.KeyboardEvent) => {
-          if (e.key === 'Enter') setIsClicked(true)
-        }}
       />
-      <IconButtonStyled
-        onClick={() => {
-          setIsClicked(true)
-        }}
-      >
-        <Magnifying fill="white" />
-      </IconButtonStyled>
+
+      <SearchButton setValue={setValue} value={value} />
     </OuterStyled>
   )
 }
