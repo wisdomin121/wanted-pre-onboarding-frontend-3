@@ -1,12 +1,20 @@
-const useRecommendStorage = (keyword: string) => {
+import { getSicks } from 'apis/sickApi'
+import { Result } from 'types/search'
+
+const useRecommendStorage = (keyword: string, setResults: (value: Result[]) => void) => {
   const checkCache = () => {
     const cache = sessionStorage.getItem(keyword)
 
     if (cache) {
-      return JSON.parse(cache)
+      setResults(JSON.parse(cache))
     }
 
-    return null
+    getSicks(keyword)
+      .then((res) => {
+        setResults(res.data)
+        sessionStorage.setItem(keyword, JSON.stringify(res.data))
+      })
+      .catch((err) => console.error(err))
   }
 
   return checkCache

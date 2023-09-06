@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { getSicks } from 'apis/sickApi'
 import { SearchInput, SearchResults } from 'components'
 import { useDebounce, useRecommendStorage } from 'hooks'
 import { useResultsStore } from 'stores'
@@ -14,24 +13,8 @@ function MainPage() {
 
   const mainRef = useRef<HTMLDivElement>(null)
 
-  const checkCache = useRecommendStorage(value)
-
-  const loadSicksFunc = () => {
-    const cache = checkCache()
-
-    if (cache) {
-      setResults(cache)
-    } else {
-      getSicks(value)
-        .then((res) => {
-          setResults(res.data)
-          sessionStorage.setItem(value, JSON.stringify(res.data))
-        })
-        .catch((err) => console.error(err))
-    }
-  }
-
-  const getResultsWithDebounce = useDebounce(loadSicksFunc)
+  const checkCache = useRecommendStorage(value, setResults)
+  const getResultsWithDebounce = useDebounce(checkCache)
 
   useEffect(() => {
     if (value.length !== 0) {
