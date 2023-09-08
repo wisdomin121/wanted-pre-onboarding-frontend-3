@@ -1,8 +1,14 @@
+import { useState } from 'react'
+
 import { getSicks } from 'apis/sickApi'
 import { Result } from 'types/search'
 
 const useRecommendStorage = (keyword: string, setResults: (value: Result[]) => void) => {
+  const [loading, setLoading] = useState<boolean>(false)
+
   const checkCache = () => {
+    setLoading(true)
+
     const cache = sessionStorage.getItem(keyword)
 
     if (cache) {
@@ -12,6 +18,7 @@ const useRecommendStorage = (keyword: string, setResults: (value: Result[]) => v
         sessionStorage.removeItem(keyword)
       } else {
         setResults(JSON.parse(cache).data)
+        setLoading(false)
         return
       }
     }
@@ -25,9 +32,10 @@ const useRecommendStorage = (keyword: string, setResults: (value: Result[]) => v
         )
       })
       .catch((err) => console.error(err))
+      .finally(() => setLoading(false))
   }
 
-  return checkCache
+  return { checkCache, loading }
 }
 
 export default useRecommendStorage

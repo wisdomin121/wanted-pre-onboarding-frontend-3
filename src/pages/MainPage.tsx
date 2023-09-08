@@ -13,7 +13,7 @@ function MainPage() {
 
   const mainRef = useRef<HTMLDivElement>(null)
 
-  const checkCache = useRecommendStorage(value, setResults)
+  const { checkCache, loading } = useRecommendStorage(value, setResults)
   const getResultsWithDebounce = useDebounce(checkCache)
 
   useEffect(() => {
@@ -39,15 +39,10 @@ function MainPage() {
   }, [])
 
   return (
-    <MainStyled
-      ref={mainRef}
-      onClick={(e) => {
-        e.stopPropagation()
-      }}
-    >
+    <MainStyled ref={mainRef}>
       <SearchInput isFocus={isFocus} setIsFocus={setIsFocus} setValue={setValue} value={value} />
 
-      {isFocus && <SearchResults setValue={setValue} value={value} />}
+      {isFocus && <SearchResults loading={loading} setValue={setValue} value={value} />}
     </MainStyled>
   )
 }

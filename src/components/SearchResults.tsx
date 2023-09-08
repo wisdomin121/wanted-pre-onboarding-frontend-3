@@ -6,9 +6,10 @@ import { InnerStyled, NoResultsTextStyled, OuterStyled, TextStyled } from './Sea
 interface SearchResultsProps {
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
+  loading: boolean
 }
 
-function SearchResults({ value, setValue }: SearchResultsProps) {
+function SearchResults({ value, setValue, loading }: SearchResultsProps) {
   const { results } = useResultsStore()
 
   const recentlyKeywords = sessionStorage.getItem('recentlyKeywords')
@@ -22,7 +23,9 @@ function SearchResults({ value, setValue }: SearchResultsProps) {
       )}
 
       <InnerStyled>
-        {value !== '' ? (
+        {loading ? (
+          <NoResultsTextStyled>Loading...</NoResultsTextStyled>
+        ) : value !== '' ? (
           results.length !== 0 ? (
             results.map((result, idx) => {
               return (
