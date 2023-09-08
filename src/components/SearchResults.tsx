@@ -7,9 +7,10 @@ interface SearchResultsProps {
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
   loading: boolean
+  focusIdx: number
 }
 
-function SearchResults({ value, setValue, loading }: SearchResultsProps) {
+function SearchResults({ value, setValue, loading, focusIdx }: SearchResultsProps) {
   const { results } = useResultsStore()
 
   const recentlyKeywords = sessionStorage.getItem('recentlyKeywords')
@@ -34,6 +35,7 @@ function SearchResults({ value, setValue, loading }: SearchResultsProps) {
                   _onClick={() => {
                     setValue(result.sickNm)
                   }}
+                  isResultFocus={focusIdx === idx}
                   text={result.sickNm}
                 />
               )
@@ -52,6 +54,7 @@ function SearchResults({ value, setValue, loading }: SearchResultsProps) {
                   _onClick={() => {
                     setValue(keyword)
                   }}
+                  isResultFocus={focusIdx === idx}
                   text={keyword}
                 />
               )

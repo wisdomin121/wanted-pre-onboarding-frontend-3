@@ -1,6 +1,6 @@
 import { styled } from 'styled-components'
 
-export const OuterStyled = styled.button`
+export const OuterStyled = styled.button<{ isResultFocus: boolean }>`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -12,4 +12,6 @@ export const OuterStyled = styled.button`
   &:hover {
     background-color: #f9f7f2;
   }
+
+  ${({ isResultFocus }) => isResultFocus && `background-color: #f9f7f2`}
 `
