@@ -19,7 +19,7 @@ function SearchInput({ isFocus, setIsFocus, value, setValue }: InputProps) {
   }
 
   return (
-    <OuterStyled isFocus={isFocus}>
+    <OuterStyled $isFocus={isFocus}>
       <InputStyled
         placeholder={isFocus ? '' : '🔍︎ 질환명을 입력해 주세요'}
         value={value}
