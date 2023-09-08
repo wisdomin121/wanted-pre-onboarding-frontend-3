@@ -1,1 +1,1 @@
-export { default as useResultsStore } from './useResultsStore'
+export { default as useSearchStore } from './useSearchStore'

@@ -1,17 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { SearchInput, SearchResults } from 'components'
 import { useDebounce, useRecommendStorage } from 'hooks'
-import { useResultsStore } from 'stores'
+import { useSearchStore } from 'stores'
 
 import { MainStyled } from './MainPage.styled'
 
 function MainPage() {
-  const [value, setValue] = useState<string>('')
   const [isFocus, setIsFocus] = useState<boolean>(false)
-  const [focusIdx, setFocusIdx] = useState<number>(-1)
-  const { setResults } = useResultsStore()
+  const { value, setResults } = useSearchStore()
 
   const { checkCache, loading } = useRecommendStorage(value, setResults)
   const getResultsWithDebounce = useDebounce(checkCache)
@@ -26,18 +23,9 @@ function MainPage() {
 
   return (
     <MainStyled>
-      <SearchInput
-        focusIdx={focusIdx}
-        isFocus={isFocus}
-        setFocusIdx={setFocusIdx}
-        setIsFocus={setIsFocus}
-        setValue={setValue}
-        value={value}
-      />
+      <SearchInput isFocus={isFocus} setIsFocus={setIsFocus} />
 
-      {isFocus && (
-        <SearchResults focusIdx={focusIdx} loading={loading} setValue={setValue} value={value} />
-      )}
+      {isFocus && <SearchResults loading={loading} />}
     </MainStyled>
   )
 }

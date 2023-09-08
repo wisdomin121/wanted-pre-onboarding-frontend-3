@@ -8,7 +8,11 @@ export interface Result {
   sickNm: string
 }
 
-export interface Results {
+export interface Search {
   results: Result[]
   setResults: (value: Result[]) => void
+  value: string
+  setValue: (v: string) => void
+  focusIdx: number
+  setFocusIdx: (value: number) => void
 }

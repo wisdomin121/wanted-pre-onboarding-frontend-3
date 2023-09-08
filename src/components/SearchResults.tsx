@@ -1,17 +1,14 @@
 import { SearchResult } from 'components'
-import { useResultsStore } from 'stores'
+import { useSearchStore } from 'stores'
 
 import { InnerStyled, NoResultsTextStyled, OuterStyled, TextStyled } from './SearchResults.styled'
 
 interface SearchResultsProps {
-  value: string
-  setValue: React.Dispatch<React.SetStateAction<string>>
   loading: boolean
-  focusIdx: number
 }
 
-function SearchResults({ value, setValue, loading, focusIdx }: SearchResultsProps) {
-  const { results } = useResultsStore()
+function SearchResults({ loading }: SearchResultsProps) {
+  const { value, setValue, results, focusIdx } = useSearchStore()
 
   const recentlyKeywords = sessionStorage.getItem('recentlyKeywords')
 

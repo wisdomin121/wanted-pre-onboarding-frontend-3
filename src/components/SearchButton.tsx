@@ -2,16 +2,13 @@ import { useEffect, useState } from 'react'
 
 import { ReactComponent as Magnifying } from 'assets/Magnifying.svg'
 import { useRecentStorage } from 'hooks'
+import { useSearchStore } from 'stores'
 
 import { IconButtonStyled } from './SearchButton.styled'
 
-interface SearchButtonProps {
-  value: string
-  setValue: React.Dispatch<React.SetStateAction<string>>
-}
-
-function SearchButton({ value, setValue }: SearchButtonProps) {
+function SearchButton() {
   const [isClicked, setIsClicked] = useState<boolean>(false)
+  const { value, setValue } = useSearchStore()
 
   const saveRecommandResult = useRecentStorage('recentlyKeywords', value)
 

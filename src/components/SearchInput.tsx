@@ -1,22 +1,18 @@
 import { SearchButton } from 'components'
 import useChangeFocus from 'hooks/useChangeFocus'
-import { useResultsStore } from 'stores'
+import { useSearchStore } from 'stores'
 
 import { InputStyled, OuterStyled } from './SearchInput.styled'
 
 interface InputProps {
   isFocus: boolean
   setIsFocus: React.Dispatch<React.SetStateAction<boolean>>
-  value: string
-  setValue: React.Dispatch<React.SetStateAction<string>>
-  focusIdx: number
-  setFocusIdx: React.Dispatch<React.SetStateAction<number>>
 }
 
-function SearchInput({ isFocus, setIsFocus, value, setValue, focusIdx, setFocusIdx }: InputProps) {
-  const { results } = useResultsStore()
+function SearchInput({ isFocus, setIsFocus }: InputProps) {
+  const { value, setValue } = useSearchStore()
 
-  const handleKeyDown = useChangeFocus(results, focusIdx, setFocusIdx, setIsFocus, setValue)
+  const handleKeyDown = useChangeFocus(setIsFocus)
 
   const handleFocus = () => {
     setIsFocus(true)
@@ -41,7 +37,7 @@ function SearchInput({ isFocus, setIsFocus, value, setValue, focusIdx, setFocusI
         onKeyDown={handleKeyDown}
       />
 
-      <SearchButton setValue={setValue} value={value} />
+      <SearchButton />
     </OuterStyled>
   )
 }
