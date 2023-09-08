@@ -7,12 +7,11 @@ import { useSearchStore } from 'stores'
 import { MainStyled } from './MainPage.styled'
 
 function MainPage() {
-  const [isFocus, setIsFocus] = useState<boolean>(false)
-  const [isResultsFocus, setIsResultsFocus] = useState<boolean>(false)
+  const [isSearchBarFocus, setIsSearchBarFocus] = useState<boolean>(false)
   const { value, setResults } = useSearchStore()
 
-  const { checkCache, loading } = useRecommendStorage(value, setResults)
-  const getResultsWithDebounce = useDebounce(checkCache)
+  const { checkCacheOrApi, loading } = useRecommendStorage(value, setResults)
+  const getResultsWithDebounce = useDebounce(checkCacheOrApi)
 
   useEffect(() => {
     if (value.length !== 0) {
@@ -24,11 +23,9 @@ function MainPage() {
 
   return (
     <MainStyled>
-      <SearchInput isFocus={isFocus} setIsFocus={setIsFocus} />
+      <SearchInput isSearchBarFocus={isSearchBarFocus} setIsSearchBarFocus={setIsSearchBarFocus} />
 
-      {(isFocus || isResultsFocus) && (
-        <SearchResults loading={loading} setIsResultsFocus={setIsResultsFocus} />
-      )}
+      {isSearchBarFocus && <SearchResults loading={loading} />}
     </MainStyled>
   )
 }

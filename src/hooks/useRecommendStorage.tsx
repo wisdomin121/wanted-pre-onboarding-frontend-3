@@ -6,7 +6,7 @@ import { Result } from 'types/search'
 const useRecommendStorage = (keyword: string, setResults: (value: Result[]) => void) => {
   const [loading, setLoading] = useState<boolean>(false)
 
-  const checkCache = () => {
+  const checkCacheOrApi = () => {
     if (keyword.length === 0) return
 
     setLoading(true)
@@ -37,7 +37,7 @@ const useRecommendStorage = (keyword: string, setResults: (value: Result[]) => v
       .finally(() => setLoading(false))
   }
 
-  return { checkCache, loading }
+  return { checkCacheOrApi, loading }
 }
 
 export default useRecommendStorage

@@ -7,25 +7,29 @@ import { useSearchStore } from 'stores'
 import { IconButtonStyled } from './SearchButton.styled'
 
 function SearchButton() {
-  const [isClicked, setIsClicked] = useState<boolean>(false)
+  const [isSearched, setIsSearched] = useState<boolean>(false)
   const { value, setValue } = useSearchStore()
 
   const saveRecommandResult = useRecentStorage('recentlyKeywords', value)
 
+  const searchKeyword = () => {
+    setIsSearched(true)
+  }
+
+  const searchedKeyword = () => {
+    saveRecommandResult()
+    setIsSearched(false)
+    setValue('')
+  }
+
   useEffect(() => {
-    if (isClicked) {
-      saveRecommandResult()
-      setIsClicked(false)
-      setValue('')
+    if (isSearched) {
+      searchedKeyword()
     }
-  }, [isClicked])
+  }, [isSearched])
 
   return (
-    <IconButtonStyled
-      onClick={() => {
-        setIsClicked(true)
-      }}
-    >
+    <IconButtonStyled onClick={searchKeyword}>
       <Magnifying fill="white" />
     </IconButtonStyled>
   )

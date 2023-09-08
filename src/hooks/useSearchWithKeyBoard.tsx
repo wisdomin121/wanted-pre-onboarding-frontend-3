@@ -1,7 +1,7 @@
 import { RESULTS_MAX_LENGTH } from 'const'
 import { useSearchStore } from 'stores'
 
-const useChangeFocus = (setIsFocus: React.Dispatch<React.SetStateAction<boolean>>) => {
+const useSearchWithKeyBoard = (setIsFocus: React.Dispatch<React.SetStateAction<boolean>>) => {
   const { setValue, results, focusIdx, setFocusIdx } = useSearchStore()
 
   const RESULTS_LENGTH = results.length
@@ -30,4 +30,4 @@ const useChangeFocus = (setIsFocus: React.Dispatch<React.SetStateAction<boolean>
   return changeIdxNum
 }
 
-export default useChangeFocus
+export default useSearchWithKeyBoard

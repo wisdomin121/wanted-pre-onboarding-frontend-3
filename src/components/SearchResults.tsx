@@ -6,22 +6,15 @@ import { InnerStyled, NoResultsTextStyled, OuterStyled, TextStyled } from './Sea
 
 interface SearchResultsProps {
   loading: boolean
-  setIsResultsFocus: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function SearchResults({ loading, setIsResultsFocus }: SearchResultsProps) {
+function SearchResults({ loading }: SearchResultsProps) {
   const { value, results, focusIdx } = useSearchStore()
 
   const recentlyKeywords = sessionStorage.getItem('recentlyKeywords')
 
   return (
     <OuterStyled
-      onBlur={() => {
-        setIsResultsFocus(false)
-      }}
-      onFocus={() => {
-        setIsResultsFocus(true)
-      }}
       onMouseDown={(e) => {
         e.preventDefault()
       }}

@@ -1,6 +1,6 @@
 import { styled } from 'styled-components'
 
-export const OuterStyled = styled.div<{ $isFocus: boolean }>`
+export const OuterStyled = styled.div<{ $isSearchBarFocus: boolean }>`
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -10,7 +10,7 @@ export const OuterStyled = styled.div<{ $isFocus: boolean }>`
   border-radius: 42px;
   background-color: white;
 
-  ${({ $isFocus }) => $isFocus && 'border: 2px solid #007be9;'}
+  ${({ $isSearchBarFocus }) => $isSearchBarFocus && 'border: 2px solid #007be9;'}
 `
 
 export const InputStyled = styled.input`

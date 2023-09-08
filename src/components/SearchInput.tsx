@@ -1,40 +1,40 @@
 import { SearchButton } from 'components'
-import useChangeFocus from 'hooks/useChangeFocus'
+import { useSearchWithKeyBoard } from 'hooks'
 import { useSearchStore } from 'stores'
 
 import { InputStyled, OuterStyled } from './SearchInput.styled'
 
 interface InputProps {
-  isFocus: boolean
-  setIsFocus: React.Dispatch<React.SetStateAction<boolean>>
+  isSearchBarFocus: boolean
+  setIsSearchBarFocus: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function SearchInput({ isFocus, setIsFocus }: InputProps) {
+function SearchInput({ isSearchBarFocus, setIsSearchBarFocus }: InputProps) {
   const { value, setValue } = useSearchStore()
 
-  const handleKeyDown = useChangeFocus(setIsFocus)
+  const useKeyBoard = useSearchWithKeyBoard(setIsSearchBarFocus)
 
-  const handleFocus = () => {
-    setIsFocus(true)
+  const focusSearchBar = () => {
+    setIsSearchBarFocus(true)
   }
 
-  const handleBlur = () => {
-    setIsFocus(false)
+  const outOfFocusSearchBar = () => {
+    setIsSearchBarFocus(false)
   }
 
-  const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const renewalValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value)
   }
 
   return (
-    <OuterStyled $isFocus={isFocus}>
+    <OuterStyled $isSearchBarFocus={isSearchBarFocus}>
       <InputStyled
-        placeholder={isFocus ? '' : '🔍︎ 질환명을 입력해 주세요'}
+        placeholder={isSearchBarFocus ? '' : '🔍︎ 질환명을 입력해 주세요'}
         value={value}
-        onBlur={handleBlur}
-        onChange={changeValue}
-        onFocus={handleFocus}
-        onKeyDown={handleKeyDown}
+        onBlur={outOfFocusSearchBar}
+        onChange={renewalValue}
+        onFocus={focusSearchBar}
+        onKeyDown={useKeyBoard}
       />
 
       <SearchButton />
