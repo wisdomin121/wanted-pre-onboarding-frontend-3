@@ -7,6 +7,8 @@ const useRecommendStorage = (keyword: string, setResults: (value: Result[]) => v
   const [loading, setLoading] = useState<boolean>(false)
 
   const checkCache = () => {
+    if (keyword.length === 0) return
+
     setLoading(true)
 
     const cache = sessionStorage.getItem(keyword)
