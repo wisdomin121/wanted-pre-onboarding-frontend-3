@@ -11,7 +11,7 @@ interface SearchResultProps {
 function SearchResult({ text, _onClick, isResultFocus }: SearchResultProps) {
   return (
     <OuterStyled
-      isResultFocus={isResultFocus}
+      $isResultFocus={isResultFocus}
       onClick={_onClick}
       onMouseDown={(e) => {
         e.preventDefault()
