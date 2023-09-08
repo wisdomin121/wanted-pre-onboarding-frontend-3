@@ -1,19 +1,31 @@
 import { SearchResult } from 'components'
+import { RESULTS_MAX_LENGTH } from 'const'
 import { useSearchStore } from 'stores'
 
 import { InnerStyled, NoResultsTextStyled, OuterStyled, TextStyled } from './SearchResults.styled'
 
 interface SearchResultsProps {
   loading: boolean
+  setIsResultsFocus: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function SearchResults({ loading }: SearchResultsProps) {
-  const { value, setValue, results, focusIdx } = useSearchStore()
+function SearchResults({ loading, setIsResultsFocus }: SearchResultsProps) {
+  const { value, results, focusIdx } = useSearchStore()
 
   const recentlyKeywords = sessionStorage.getItem('recentlyKeywords')
 
   return (
-    <OuterStyled>
+    <OuterStyled
+      onBlur={() => {
+        setIsResultsFocus(false)
+      }}
+      onFocus={() => {
+        setIsResultsFocus(true)
+      }}
+      onMouseDown={(e) => {
+        e.preventDefault()
+      }}
+    >
       {value.length === 0 ? (
         <TextStyled>최근 검색어</TextStyled>
       ) : (
@@ -25,16 +37,9 @@ function SearchResults({ loading }: SearchResultsProps) {
           <NoResultsTextStyled>Loading...</NoResultsTextStyled>
         ) : value !== '' ? (
           results.length !== 0 ? (
-            results.slice(0, 7).map((result, idx) => {
+            results.slice(0, RESULTS_MAX_LENGTH).map((result, idx) => {
               return (
-                <SearchResult
-                  key={idx}
-                  _onClick={() => {
-                    setValue(result.sickNm)
-                  }}
-                  isResultFocus={focusIdx === idx}
-                  text={result.sickNm}
-                />
+                <SearchResult key={idx} isResultFocus={focusIdx === idx} keyword={result.sickNm} />
               )
             })
           ) : (
@@ -43,18 +48,9 @@ function SearchResults({ loading }: SearchResultsProps) {
         ) : recentlyKeywords ? (
           JSON.parse(recentlyKeywords)
             .reverse()
-            .slice(0, 7)
+            .slice(0, RESULTS_MAX_LENGTH)
             .map((keyword: string, idx: number) => {
-              return (
-                <SearchResult
-                  key={idx}
-                  _onClick={() => {
-                    setValue(keyword)
-                  }}
-                  isResultFocus={focusIdx === idx}
-                  text={keyword}
-                />
-              )
+              return <SearchResult key={idx} isResultFocus={focusIdx === idx} keyword={keyword} />
             })
         ) : (
           <NoResultsTextStyled>최근 검색어 없음</NoResultsTextStyled>

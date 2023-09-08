@@ -1,6 +1,5 @@
+import { RESULTS_MAX_LENGTH } from 'const'
 import { useSearchStore } from 'stores'
-
-const RESULTS_MAX_LENGTH = 7
 
 const useChangeFocus = (setIsFocus: React.Dispatch<React.SetStateAction<boolean>>) => {
   const { setValue, results, focusIdx, setFocusIdx } = useSearchStore()

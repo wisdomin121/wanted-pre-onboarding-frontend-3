@@ -1,24 +1,30 @@
 import { ReactComponent as Magnifying } from 'assets/Magnifying.svg'
+import { useSearchStore } from 'stores'
 
 import { OuterStyled } from './SearchResult.styled'
 
 interface SearchResultProps {
-  text: string
-  _onClick: () => void
+  keyword: string
   isResultFocus: boolean
 }
 
-function SearchResult({ text, _onClick, isResultFocus }: SearchResultProps) {
+function SearchResult({ keyword, isResultFocus }: SearchResultProps) {
+  const { setValue } = useSearchStore()
+
+  const resultClick = () => {
+    setValue(keyword)
+  }
+
   return (
     <OuterStyled
       $isResultFocus={isResultFocus}
-      onClick={_onClick}
-      onMouseDown={(e) => {
-        e.preventDefault()
+      onClick={(e) => {
+        e.stopPropagation()
+        resultClick()
       }}
     >
       <Magnifying fill="gray" />
-      {text}
+      {keyword}
     </OuterStyled>
   )
 }

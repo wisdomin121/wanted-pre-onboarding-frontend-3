@@ -8,6 +8,7 @@ import { MainStyled } from './MainPage.styled'
 
 function MainPage() {
   const [isFocus, setIsFocus] = useState<boolean>(false)
+  const [isResultsFocus, setIsResultsFocus] = useState<boolean>(false)
   const { value, setResults } = useSearchStore()
 
   const { checkCache, loading } = useRecommendStorage(value, setResults)
@@ -25,7 +26,9 @@ function MainPage() {
     <MainStyled>
       <SearchInput isFocus={isFocus} setIsFocus={setIsFocus} />
 
-      {isFocus && <SearchResults loading={loading} />}
+      {(isFocus || isResultsFocus) && (
+        <SearchResults loading={loading} setIsResultsFocus={setIsResultsFocus} />
+      )}
     </MainStyled>
   )
 }
