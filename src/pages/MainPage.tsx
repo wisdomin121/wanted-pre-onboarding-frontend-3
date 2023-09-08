@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useRef, useState } from 'react'
 
 import { SearchInput, SearchResults } from 'components'
@@ -11,8 +12,6 @@ function MainPage() {
   const [isFocus, setIsFocus] = useState<boolean>(false)
   const { setResults } = useResultsStore()
 
-  const mainRef = useRef<HTMLDivElement>(null)
-
   const { checkCache, loading } = useRecommendStorage(value, setResults)
   const getResultsWithDebounce = useDebounce(checkCache)
 
@@ -24,22 +23,8 @@ function MainPage() {
     }
   }, [value])
 
-  useEffect(() => {
-    const closeResults = (e: MouseEvent) => {
-      if (mainRef.current !== null && !mainRef.current.contains(e.target as Node)) {
-        setIsFocus(false)
-      }
-    }
-
-    document.addEventListener('click', closeResults)
-
-    return () => {
-      document.removeEventListener('click', closeResults)
-    }
-  }, [])
-
   return (
-    <MainStyled ref={mainRef}>
+    <MainStyled>
       <SearchInput isFocus={isFocus} setIsFocus={setIsFocus} setValue={setValue} value={value} />
 
       {isFocus && <SearchResults loading={loading} setValue={setValue} value={value} />}

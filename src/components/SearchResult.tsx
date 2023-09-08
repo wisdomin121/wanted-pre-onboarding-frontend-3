@@ -9,7 +9,12 @@ interface SearchResultProps {
 
 function SearchResult({ text, _onClick }: SearchResultProps) {
   return (
-    <OuterStyled onClick={_onClick}>
+    <OuterStyled
+      onClick={_onClick}
+      onMouseDown={(e) => {
+        e.preventDefault()
+      }}
+    >
       <Magnifying fill="gray" />
       {text}
     </OuterStyled>

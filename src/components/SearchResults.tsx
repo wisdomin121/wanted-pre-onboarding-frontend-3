@@ -27,7 +27,7 @@ function SearchResults({ value, setValue, loading }: SearchResultsProps) {
           <NoResultsTextStyled>Loading...</NoResultsTextStyled>
         ) : value !== '' ? (
           results.length !== 0 ? (
-            results.map((result, idx) => {
+            results.slice(0, 7).map((result, idx) => {
               return (
                 <SearchResult
                   key={idx}
@@ -44,6 +44,7 @@ function SearchResults({ value, setValue, loading }: SearchResultsProps) {
         ) : recentlyKeywords ? (
           JSON.parse(recentlyKeywords)
             .reverse()
+            .slice(0, 7)
             .map((keyword: string, idx: number) => {
               return (
                 <SearchResult

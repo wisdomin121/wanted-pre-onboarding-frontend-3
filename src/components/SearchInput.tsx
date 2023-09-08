@@ -14,6 +14,10 @@ function SearchInput({ isFocus, setIsFocus, value, setValue }: InputProps) {
     setIsFocus(true)
   }
 
+  const handleBlur = () => {
+    setIsFocus(false)
+  }
+
   const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value)
   }
@@ -23,6 +27,7 @@ function SearchInput({ isFocus, setIsFocus, value, setValue }: InputProps) {
       <InputStyled
         placeholder={isFocus ? '' : '🔍︎ 질환명을 입력해 주세요'}
         value={value}
+        onBlur={handleBlur}
         onChange={changeValue}
         onFocus={handleFocus}
       />
